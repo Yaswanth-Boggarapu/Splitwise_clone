@@ -64,7 +64,7 @@ def compute_balances(group_id):
     return balances
 
 # --- Streamlit UI ---
-st.set_page_config(page_title="Splitwise Clone MongoDB", page_icon="💸")
+st.set_page_config(page_title="Splitwise Clone", page_icon="💸")
 st.title("💸 Splitwise Clone (MongoDB Version)")
 
 # Session state
@@ -83,7 +83,7 @@ if st.session_state.user is None:
             if user:
                 st.session_state.user = username
                 st.success(f"Welcome, {username}")
-                st.experimental_rerun()
+                st.rerun()
             else:
                 st.error("Invalid username or password")
 
@@ -102,7 +102,7 @@ else:
     st.sidebar.success(f"Logged in as {username}")
     if st.sidebar.button("Log Out"):
         st.session_state.user = None
-        st.experimental_rerun()
+        st.rerun()
 
     # Groups
     st.header("Groups")
@@ -116,7 +116,7 @@ else:
         if st.button("Create Group"):
             create_group(new_name, username)
             st.success("Group created")
-            st.experimental_rerun()
+            st.rerun()
     else:
         group = next(g for g in groups if g["name"] == selected)
         group_id = group["_id"]
@@ -132,7 +132,7 @@ else:
             if new_member not in members:
                 add_member(group_id, new_member)
                 st.success("Member added")
-                st.experimental_rerun()
+                st.rerun()
 
         # Add expense
         st.write("### Add Expense")
@@ -143,7 +143,7 @@ else:
         if st.button("Add Expense"):
             add_expense(group_id, desc, amount, paid_by, split_between)
             st.success("Expense added")
-            st.experimental_rerun()
+            st.rerun()
 
         # Expense history
         st.write("### Expense History")
